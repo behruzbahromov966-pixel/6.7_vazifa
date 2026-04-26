@@ -13,8 +13,9 @@
 
 <div class="container">
     {% include 'layout/navbar.html' %}
-
-    <div class="mt-5 mb-5 d-flex justify-content-between">
+    <div class="mt-5 mb-5">
+        {% block main %}
+    <div class="d-flex justify-content-between">
         <div class="col-3">
             <div class="list-group">
                 {% for brand in brands %}
@@ -26,6 +27,8 @@
             {% block content %}
             {% endblock content%}
         </div>
+    </div>
+        {% endblock main %}
     </div>
 
 

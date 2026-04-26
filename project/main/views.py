@@ -1,7 +1,8 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, HttpRequest
 
 from .models import Brend, Car
+from .forms import CarForm
 # Create your views here.
 
 def index(request):
@@ -38,3 +39,16 @@ def car_by_brand(request, brand_id):
     }
 
     return render(request, 'main/index.html', context)
+
+def add_car(request: HttpRequest):
+    if request.method == 'POST':
+        form = CarForm(data=request.POST, files=request.FILES)
+        if form.is_valid():
+            car = form.save()
+            return redirect('detail', car_id=car.pk)
+    form = CarForm()
+    context = {
+        'form': form
+    }
+
+    return render(request, 'main/add_car.html', context)
